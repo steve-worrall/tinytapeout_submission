@@ -47,7 +47,9 @@ module tt_um_spacelizard_apu (
   reg flag_n;  // negative
   reg flag_v;  // overflow
 
-  reg [7:0] ram [0:15];
+  //---16-byte RAM to 8-byte to save routing area---
+  // reg [7:0] ram [0:15];
+  reg [7:0] ram [0:7];
 
   integer i;
 
