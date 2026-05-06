@@ -83,9 +83,10 @@ module tt_um_spacelizard_apu (
       flag_n <= 1'b0;
       flag_v <= 1'b0;
 
-      for (i = 0; i < 16; i = i + 1) begin
-        ram[i] <= 8'h00;
-      end
+      // ---RAM RESET removed to save routing area---
+      // for (i = 0; i < 16; i = i + 1) begin
+      //   ram[i] <= 8'h00;
+      // end
     end else begin
       exec_d <= exec;
 
