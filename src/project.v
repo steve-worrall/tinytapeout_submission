@@ -30,6 +30,7 @@ module tt_um_spacelizard_apu (
   wire exec = ui_in[7];
   wire [2:0] opcode = ui_in[6:4];
   wire [3:0] arg    = ui_in[3:0];
+  wire [2:0] ram_addr = arg[2:0];
 
   reg exec_d;
 
@@ -50,8 +51,6 @@ module tt_um_spacelizard_apu (
   //---16-byte RAM to 8-byte to save routing area---
   // reg [7:0] ram [0:15];
   reg [7:0] ram [0:7];
-
-  integer i;
 
   // ------------------------------------------------------------
   // ALU helper wires
@@ -230,7 +229,7 @@ module tt_um_spacelizard_apu (
           // ----------------------------------------------------
           // ram[arg] = uio_in
           3'b100: begin
-            ram[arg] <= uio_in;
+            ram[ram_addr] <= uio_in;
           end
 
           // ----------------------------------------------------
@@ -238,9 +237,9 @@ module tt_um_spacelizard_apu (
           // ----------------------------------------------------
           // A = ram[arg]
           3'b101: begin
-            A <= ram[arg];
-            flag_z <= (ram[arg] == 8'h00);
-            flag_n <= ram[arg][7];
+            A <= ram[ram_addr];
+            flag_z <= (ram[ram_addr] == 8'h00);
+            flag_n <= ram[ram_addr][7];
             flag_c <= 1'b0;
             flag_v <= 1'b0;
           end
@@ -263,7 +262,7 @@ module tt_um_spacelizard_apu (
   //   arg 1 = B
   //   arg 2 = flags: {0000, V, N, C, Z}
   //
-  // opcode 111: read RAM[arg]
+  // opcode 111: read RAM[ram_addr]
 
   assign uio_oe = (opcode == 3'b110 || opcode == 3'b111) ? 8'hff : 8'h00;
 
@@ -271,7 +270,7 @@ module tt_um_spacelizard_apu (
     (opcode == 3'b110 && arg == 4'h0) ? A :
     (opcode == 3'b110 && arg == 4'h1) ? B :
     (opcode == 3'b110 && arg == 4'h2) ? {4'b0000, flag_v, flag_n, flag_c, flag_z} :
-    (opcode == 3'b111)                ? ram[arg] :
+    (opcode == 3'b111)                ? ram[ram_addr] :
                                          8'h00;
 
 endmodule
