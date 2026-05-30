@@ -222,4 +222,3 @@ Useful signals:
 The internal RAM is not reset to zero. This is intentional to reduce area and routing usage so the design can fit in a 1x1 Tiny Tapeout tile.
 
 Software or test logic should write RAM before reading it.
-EOF
