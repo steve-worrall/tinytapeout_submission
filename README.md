@@ -6,7 +6,7 @@ Spacelizard APU is a tiny 8-bit arithmetic processing unit designed for Tiny Tap
 
 It provides an 8-bit ALU, two registers, status flags, small RAM, and a simple command/data bus interface using the Tiny Tapeout pins.
 
-[![Watch the video](spacelizard_APU.png)](spacelizard_APU.mp4)
+![Spacelizard](spacelizard_APU.png)
 
 ## Features
 
